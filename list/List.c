@@ -6,25 +6,39 @@
 #include <stdio.h>
 #include "List.h"
 
-struct Node
+/*struct Node
 {
-    /* ElementType = int */
+    *//* ElementType = int *//*
     int Element;
     Position Next;
-};
+};*/
 
 void PrintList( List L ){
     if( IsEmpty( L ) )
+    {
         printf("The list is empty.\n");
+        return;
+    }
 
     Position P = L->Next;
     do{
+        printf( "%d ", P->Element );
+    }while( ( P = P->Next ) && printf("-> ") );
 
-    }
+/*    P = L->Next;
+    while(1)
+    {
+        printf("%d ", P->Element );
+        P = P->Next;
+        if( P != NULL )
+            printf("-> ");
+        else
+            break;
+    }*/
 }
 
 List MakeEmpty( List L ){
-    DeleteList( L );
+    L->Next = NULL;
     return L;
 }
 
@@ -50,12 +64,13 @@ Position Find( int X, List L )
 void Delete( int X, List L )
 {
     Position P = FindPrevious( X, L );
+    Position temp = P->Next;
 
     if( !IsLast( P, L ) )
     {
         //删除
-        P->Next = P->Next->Next;
-        free(P->Next);
+        P->Next = temp->Next;
+        free(temp);
     }
 }
 
@@ -75,8 +90,7 @@ void Insert( int X, List L, Position P )
         return;
 
     temp->Element = X;
-    temp->Next = P->Next->Next;
-
+    temp->Next = P->Next;
     P->Next = temp;
 }
 
@@ -92,6 +106,22 @@ void DeleteList( List L )
         P = P->Next;
         free(temp);
     }
+}
+
+/* DeleteList递归写法 */
+void Delete_Recur( Position P)
+{
+    if(P->Next != NULL )
+        Delete_Recur( P->Next );
+
+    free(P);
+}
+
+void DeleteList_Recur( List L )
+{
+    Delete_Recur( L->Next );
+
+    L->Next = NULL;
 }
 
 Position Header( List L )

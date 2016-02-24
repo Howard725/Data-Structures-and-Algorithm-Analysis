@@ -10,6 +10,13 @@ typedef struct Node *PtrToNode;
 typedef PtrToNode List;
 typedef PtrToNode Position;
 
+struct Node
+{
+    /* ElementType = int */
+    int Element;
+    Position Next;
+};
+
 /* operations */
 /* Basic Operations: PrintList, MakeEmpty, Find, FindKth, Insert, Delete */
 /* ElementType = int */
@@ -22,6 +29,7 @@ void Delete( int X, List L );
 Position FindPrevious( int X, List L );
 void Insert( int X, List L, Position P);
 void DeleteList( List L );
+void DeleteList_Recur( List L );
 Position Header( List L );
 Position First( List L );
 Position Advance( Position P );
