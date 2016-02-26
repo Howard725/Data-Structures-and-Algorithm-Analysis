@@ -66,7 +66,7 @@ void Delete( int X, List L )
     Position P = FindPrevious( X, L );
     Position temp = P->Next;
 
-    if( !IsLast( P, L ) )
+    if( !IsLast( P, L ) ) /* 该判断条件是FindPRevious所限制的 */
     {
         //删除
         P->Next = temp->Next;
