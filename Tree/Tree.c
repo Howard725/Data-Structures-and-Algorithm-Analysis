@@ -79,6 +79,60 @@ SearchTree Insert( ElementType X, SearchTree T )
     return T;
 }
 
+SearchTree Delete( ElementType X, SearchTree T )
+{
+    SearchTree temp;
+    ElementType RightMin;
+    //检查参数有效性
+    if ( T == NULL )
+        return NULL;
+    //较小，从左子树中删除
+    if ( X < T->Element )
+        T->Left = Delete( X, T->Left );
+    else if ( X > T->Element ) //较大，从右子树中删除
+        T->Right = Delete( X, T->Right );
+    else
+    {
+        if ( T->Right == NULL || T->Left == NULL )
+        {
+            temp = T;
+            if ( T->Right == NULL )
+                T = T->Right;
+            else if ( T->Left == NULL )
+                T = T->Left;
+            else
+                T = NULL;
+
+            free(temp);
+        }
+/*        //相等，则判断是否只有一个儿子
+        if ( T->Right == NULL && T->Left == NULL )
+        {
+            free(T);
+            return NULL;
+        }
+        else if ( T->Right == NULL && T->Left != NULL )
+        {
+            temp = T->Left;
+            free(T);
+            return temp;
+        }
+        else if ( T->Right != NULL && T->Left == NULL )
+        {
+            temp = T->Right;
+            free(T);
+            return temp;
+        }//如果只有一个儿子，则释放自己返回儿子*/
+        else
+        {
+            temp = FindMin(T->Right);
+            RightMin = temp->Element;
+            T->Element = RightMin;
+            T->Right = Delete(RightMin, T->Right);
+        }//如果有两个儿子，赋值为右子树的最小值并递归删除右子树的最小值，返回自身
+    }
+    return T;
+}
 
 
 
