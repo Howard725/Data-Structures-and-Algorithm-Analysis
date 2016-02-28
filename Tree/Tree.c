@@ -59,9 +59,9 @@ SearchTree Insert( ElementType X, SearchTree T )
     //如果不为空指针则对比元素分别递归
     if ( T != NULL )
     {
-        if ( X < T->Left )
+        if ( X < T->Element )
             T->Left = Insert( X, T->Left );
-        else if ( X > T->Right )
+        else if ( X > T->Element )
             T->Right = Insert( X, T->Right );
     }
     else
@@ -97,9 +97,9 @@ SearchTree Delete( ElementType X, SearchTree T )
         {
             temp = T;
             if ( T->Right == NULL )
-                T = T->Right;
-            else if ( T->Left == NULL )
                 T = T->Left;
+            else if ( T->Left == NULL )
+                T = T->Right;
             else
                 T = NULL;
 
@@ -134,7 +134,12 @@ SearchTree Delete( ElementType X, SearchTree T )
     return T;
 }
 
+ElementType Retrieve( Position P )
+{
+    //检查参数有效性
 
+    return P->Element;
+}
 
 
 
